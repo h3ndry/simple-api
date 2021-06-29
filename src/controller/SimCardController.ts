@@ -9,11 +9,6 @@ export const getAllSimCard = async function(_:Request, res:Response) {
 
     const simCards = await simCardRepository.find();
 
-    // return new Promise((_, res) => {
-
-    // })
-
-
     try {
         res.status(200).json({
             status: true,
