@@ -1,5 +1,4 @@
-import {ManyToOne, Entity, PrimaryGeneratedColumn, Column} from "typeorm";
-import { Orders } from './Orders';
+import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
 @Entity()
 export class SimCard {
@@ -9,8 +8,4 @@ export class SimCard {
 
     @Column()
     name: string;
-
-    @ManyToOne(() => Orders, (order: Orders) => order.simCards)
-    order: Orders;
-
 }
