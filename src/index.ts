@@ -3,48 +3,30 @@ import config from 'config';
 import log from './logger';
 import express from "express";
 import {createConnection} from "typeorm";
-import { Customer } from './entity/Customer';
+// import { Customer } from './entity/Customer';
 // import { SimCard } from "./entity/SimCard";
 import router from "./routes"
-// const router = require('./routes') ;
 
 
-createConnection().then(async connection => {
+createConnection().then(async () => {
 
-
-const port = config.get("port") as number;
-const host = config.get("host") as string;
-
+    const port = config.get("port") as number;
+    const host = config.get("host") as string;
 
     const app = express();
 
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }))
 
-    app.use('/', router)
-
-
     // 1. Must be a RESTful HTTP API listening to port 3200 (or you can use another port instead
     app.listen(port, host, () => {
 
         log.info(`Server Listen at http://${host}:${port}`);
 
+        app.use('/', router)
     })
 
-    // simCard.name = "Unique Name 3";
-    // await connection.manager.save(simCard);
-    // log.info("Saved a new user with id: " + simCard.simid);
-
-    console.log("Loading users from the database...");
-    const simCards = await connection.manager.find(Customer);
-    // const simCards = await connection.manager.remove(i)
-    console.log("Loaded users: ", simCards);
-
-    console.log("Here you can setup and run express/koa/any other framework.");
-
 }).catch(error => console.log(error));
-
-
 
 
 //     const customer = new Customer();
@@ -87,6 +69,31 @@ const host = config.get("host") as string;
 //     await connection.manager.save(customer_2);
 //     await connection.manager.save(customer_3);
 //     await connection.manager.save(customer_4);
+
+
+// ============================================================
+    // const customer = new SimCard();
+    // customer.name = "Unique name"
+
+    // const customer_1 = new SimCard();
+    // customer_1.name = "Unique name 1"
+
+    // const customer_2 = new SimCard();
+    // customer_2.name = "Unique name 2"
+
+    // const customer_3 = new SimCard();
+    // customer_3.name = "Unique name 3"
+
+    // const customer_4 = new SimCard();
+    // customer_4.name = "Unique name 4"
+
+
+    // await connection.manager.save(customer);
+    // await connection.manager.save(customer_1);
+    // await connection.manager.save(customer_2);
+    // await connection.manager.save(customer_3);
+    // await connection.manager.save(customer_4);
+
 
 
 
