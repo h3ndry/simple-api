@@ -7,14 +7,14 @@ import { SimCard } from "../entity/SimCard";
 import { Orders } from "../entity/Orders";
 
 export const getAllOrders = async function (_: Request, res: Response) {
-    // const customerCardRepository = getRepository(Customer);
+    const orderRepository = getRepository(Orders);
 
-    // const customers = await customerCardRepository.find();
+    const orders = await orderRepository.find({relations: ['customerId']});
 
     try {
         res.status(200).json({
             status: true,
-            data: "worked..",
+            data: orders,
         });
     } catch (e) {
         /* handle error */
