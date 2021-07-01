@@ -2,7 +2,7 @@ import express from 'express';
 import { getAllSimCard } from './controller/SimCardController'
 import { getAllCustomers } from './controller/CustomerControler';
 import { Request, Response } from "express";
-import { createOrder, getAllOrders } from './controller/OrderController';
+import { createOrder, getAllOrders, updateOrder } from './controller/OrderController';
 // import {Repository } from 'typeorm'
 
 const router = express.Router();
@@ -20,7 +20,7 @@ router.get("/sim-cards", getAllSimCard)
 //    // 3. Delivery address (of customer),
 router.get("/orders", getAllOrders)
 router.post("/orders", createOrder)
-router.put("/orders/:id")
+router.put("/orders/:id", updateOrder)
 
 
 

@@ -5,9 +5,11 @@ A simple web API to demonstrate relationship of customer and product in a databa
 
 ## Run Locally
 
-**Prepare Database** - The API it has been tested with MySQL & Postgress database but I
-believe it can work with any database. Check out TypeORM for more information.
+**Prepare Database** - The API has been tested with MySQL & Postgress database, but I
+believe it can work with any database. Check out [TypeORM](https://typeorm.io/#/connection) for more information.
 (Make sure your preferable database is installed)
+
+Create database
 
 ```bash
     mysql -u root -p;

@@ -9,7 +9,7 @@ import { Orders } from "../entity/Orders";
 export const getAllOrders = async function (_: Request, res: Response) {
     const orderRepository = getRepository(Orders);
 
-    const orders = await orderRepository.find({relations: ['customerId']});
+    const orders = await orderRepository.find({ relations: ["customerId"] });
 
     try {
         res.status(200).json({
@@ -77,10 +77,14 @@ export const createOrder = async function (req: Request, res: Response) {
         // await deliveryAddrRepo.save(addr)
 
         // }
+        var rightNow = new Date();
 
         const newOrder = new Orders();
         newOrder.name = req.body.name;
-        newOrder.createdAt = Date.now().toString();
+        newOrder.createdAt = rightNow
+            .toISOString()
+            .slice(0, 10)
+            .replace(/-/g, "");
         // newOrder.status = "pedding";
         newOrder.customerId = cust;
         newOrder.deliveryAddr = addr;
@@ -96,6 +100,35 @@ export const createOrder = async function (req: Request, res: Response) {
         });
     } catch (e) {
         /* handle error */
+        res.status(201).json({
+            status: false,
+            data: e,
+        });
+    }
+};
+
+export const updateOrder = async function (req: Request, res: Response) {
+    try {
+        const orderRepository = getRepository(Orders);
+        const order = await orderRepository.findOne(req.params.id);
+
+        if (req.params.id && order && order != undefined) {
+            order.status = req.body.status;
+            await orderRepository.save(order);
+
+            res.status(200).json({
+                status: true,
+                data: order,
+            });
+        }
+
+        res.status(201).json({
+            status: false,
+            data: "order not found",
+        });
+    } catch (e) {
+        /* handle error */
+
         res.status(201).json({
             status: false,
             data: e,
