@@ -3,6 +3,10 @@
 
 A simple web API to demonstrate relationship of customer and product in a database
 
+## Database Scheme
+
+Database scheme is located [here](https://drawsql.app/justme-2/diagrams/simple-api)
+
 ## Run Locally
 
 **Prepare Database** - The API has been tested with MySQL & Postgress database, but I
@@ -60,7 +64,7 @@ Start the server
 #### Get all simcards
 
 ```http
-  GET /sim-cards 
+  GET /sim-cards
 ```
 
 | Parameter | Type     | Description                |
@@ -70,7 +74,7 @@ Start the server
 #### Create new order
 
 ```http
-  POST /orders 
+  POST /orders
 ```
 
 | Parameter | Type     | Description                |
@@ -80,7 +84,7 @@ Start the server
 #### Get all orders
 
 ```http
-  GET /orders 
+  GET /orders
 ```
 
 | Parameter | Type     | Description                |
