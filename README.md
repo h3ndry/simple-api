@@ -56,6 +56,7 @@ Start the server
 ```bash
   yarn run dev
 ```
+The port is `1337`, you can change it at config file. visit `localhost:1337`
 
 
 ## API Reference
