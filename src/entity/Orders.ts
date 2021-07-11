@@ -7,15 +7,20 @@ import {
 } from "typeorm";
 import { Customer } from "./Customer";
 import { SimCard } from "./SimCard";
-import { DeliveryAdress } from "./DeliveryAdress";
+
+enum orderStatus {
+    pedding = "PEDDING",
+    processing = "PROCESSING",
+    complete = "COMPLETE"
+}
 
 @Entity()
 export class Orders {
     @PrimaryGeneratedColumn()
     orderid: number;
 
-    @Column({default: "pedding"})
-    status: string;
+    @Column({default: "PEDDING"})
+    status: orderStatus;
 
     @Column()
     name: string;
@@ -26,10 +31,6 @@ export class Orders {
     @OneToOne(() => Customer)
     @JoinColumn()
     customerId: Customer;
-
-    @OneToOne(() => DeliveryAdress)
-    @JoinColumn()
-    deliveryAddr: DeliveryAdress;
 
     @OneToOne(() => SimCard)
     @JoinColumn()

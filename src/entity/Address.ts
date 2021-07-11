@@ -16,7 +16,4 @@ export class Address extends BaseEntity {
 
     @Column()
     zipCode: number;
-
-    @Column()
-    agent: string;
 }

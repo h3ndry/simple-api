@@ -1,8 +1,15 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {
+    OneToOne,
+    JoinColumn,
+    Entity,
+    BaseEntity,
+    PrimaryGeneratedColumn,
+    Column,
+} from "typeorm";
+import { Address } from "./Address";
 
 @Entity()
-export class Customer {
-
+export class Customer extends BaseEntity {
     @PrimaryGeneratedColumn()
     customer_id: number;
 
@@ -12,11 +19,10 @@ export class Customer {
     @Column()
     lastName: string;
 
-    @Column()
-    age: number;
-
-    @Column()
+    @Column({ nullable: false })
     email: string;
 
-
+    @OneToOne(() => Address)
+    @JoinColumn()
+    addressID: Address;
 }

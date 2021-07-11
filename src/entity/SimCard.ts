@@ -6,6 +6,6 @@ export class SimCard {
     @PrimaryGeneratedColumn()
     simid: number;
 
-    @Column()
+    @Column({ nullable: false })
     name: string;
 }
