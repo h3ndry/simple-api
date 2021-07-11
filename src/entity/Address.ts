@@ -5,15 +5,15 @@ export class Address extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ nullable: false })
     city: string;
 
-    @Column()
+    @Column({ nullable: false })
     province: string;
 
-    @Column()
+    @Column({ nullable: false })
     country: string;
 
-    @Column()
-    zipCode: number;
+    @Column({ nullable: false })
+    zipCode: string;
 }
