@@ -7,6 +7,7 @@ import {
 } from "typeorm";
 import { Customer } from "./Customer";
 import { SimCard } from "./SimCard";
+import { Address } from "./Address";
 
 enum orderStatus {
     pedding = "PEDDING",
@@ -35,5 +36,9 @@ export class Orders {
     @OneToOne(() => SimCard)
     @JoinColumn()
     simcardId: SimCard;
+
+    @OneToOne(() => Address)
+    @JoinColumn()
+    addressID: Address;
 
 }

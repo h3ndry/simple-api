@@ -1,8 +1,7 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
-import log from "../logger";
+// import log from "../logger";
 import { Customer } from "../entity/Customer";
-import { DeliveryAdress } from "../entity/DeliveryAdress";
 import { SimCard } from "../entity/SimCard";
 import { Orders } from "../entity/Orders";
 
@@ -30,74 +29,56 @@ export const createOrder = async function (req: Request, res: Response) {
     const custRepo = getRepository(Customer);
     const simcardRepo = getRepository(SimCard);
     const orderRepo = getRepository(Orders);
-    const deliveryAddrRepo = getRepository(DeliveryAdress);
 
     try {
-        // Check if customer exist with the provided id
+
+        if (isNaN(parseInt(req.body.customerId)))  {
+            throw "Please provide a valid customer id"
+        }
+
+        if (isNaN(parseInt(req.body.simcardId)))  {
+            throw "Please provide a valid simCard id"
+        }
+
         const cust = await custRepo.findOne(req.body.customerId);
-        if (!cust) {
-            res.status(201).json({
-                status: false,
-                erro: "customer not found",
-            });
-            return;
+        if (cust == undefined) {
+            throw "No customer find with that ID"
         }
 
-        // Check if sim card exist with the provided id
-        const simcard = await simcardRepo.findOne(req.body.simId);
-        if (!simcard) {
-            res.status(201).json({
-                status: false,
-                erro: "simcard not found",
-            });
-            return;
+       let order = await orderRepo.findOne({ customerId: cust })
+        if (order != undefined) {
+            throw "You have already created an order"
         }
 
-        // check if address is provide
-        if (!req.body.deliveryAddr) {
-            res.status(201).json({
-                status: false,
-                erro: "Please provide address",
-            });
-            return;
+        const simCard = await simcardRepo.findOne(req.body.simcardId);
+        if (simCard == undefined) {
+            throw "No simCard find with that ID"
         }
 
-        // Check if address exist before create new one
-        // const addr = await deliveryAddrRepo.findOne({ firstName: "Timber", lastName: "Saw" });
-
-        // if(!addr) {
-
-        const addr = new DeliveryAdress();
-        addr.address = req.body.deliveryAddr.address;
-        addr.city = req.body.deliveryAddr.city;
-        addr.zipCode = req.body.deliveryAddr.zipCode;
-        addr.country = req.body.deliveryAddr.country;
-
-        await deliveryAddrRepo.save(addr);
-        // await deliveryAddrRepo.save(addr)
-
-        // }
         var rightNow = new Date();
-
         const newOrder = new Orders();
+
         newOrder.name = req.body.name;
         newOrder.createdAt = rightNow
             .toISOString()
             .slice(0, 10)
             .replace(/-/g, "");
-        // newOrder.status = "pedding";
-        newOrder.customerId = cust;
-        newOrder.deliveryAddr = addr;
-        newOrder.simcardId = simcard;
+        newOrder.customerId = cust
+        newOrder.simcardId = simCard
 
-        await orderRepo.save(newOrder);
+       if (order != undefined) {
+            throw "You have already created an order"
+       }
 
-        log.info(newOrder);
+        order = await orderRepo.save(newOrder)
+
+        console.log(order);
 
         res.status(200).json({
             status: true,
-            data: newOrder,
+            data: order,
         });
+
     } catch (e) {
         /* handle error */
         res.status(201).json({

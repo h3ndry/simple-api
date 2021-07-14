@@ -48,14 +48,13 @@ export const createCustomer = async function (req: Request, res: Response) {
 
         const cust = await cusRepo.save(cusTmp)
 
-        console.log(addr, cust);
-
         res.status(200).json({
             status: true,
-            data: "ok",
+            data: cust,
         });
     } catch (e) {
 
+        // const erro = JSON(e)
         /* handle error */
         console.log(e)
         res.status(201).json({
