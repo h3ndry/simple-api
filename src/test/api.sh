@@ -27,3 +27,17 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --data '{ "firstName": "Rari", "lastName": "Sazi", "email": "sazi@err.com", "address": {  "city": "One City",  "province": " One Province",  "country": "country",  "zipCode": "0000" } }' \
   | jq
+
+#Get All Customers
+curl --request GET \
+  --url http://localhost:1377/sim-cards \
+ | jq
+
+
+#Create Order
+
+curl --request POST \
+  --url http://localhost:1377/orders \
+  --header 'Content-Type: application/json' \
+  --data '{ "name": "A test Order", "customerId": 2, "simcardId": 1 } ' \
+ | jq
